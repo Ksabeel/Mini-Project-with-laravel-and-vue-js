@@ -21,19 +21,19 @@ In this mini project you can CRUD Operation, CRUD => Create,Read,Update and Dele
 
 Congratulations! You can now run this mini project.
 
-It's home page, here you can also search record by name and also add pagination.
+#### It's home page, here you can also search record by name and also add pagination.
 ![Home Page](screenshots/Capture.PNG)
 
-Here you can add new record.
+#### Here you can add new record.
 ![New Record](screenshots/1.PNG)
 
-Add some validation...........
+#### Add some validation...........
 ![Validation](screenshots/2.PNG)
 
-Here you can update any record.
+##### Here you can update any record.
 ![Update](screenshots/4.PNG)
 
-Here you can see one record.
+#### Here you can see one record.
 ![Single](screenshots/3.PNG)
 
-Sorry for my bad english..:(
+### Sorry for my bad english..:(
