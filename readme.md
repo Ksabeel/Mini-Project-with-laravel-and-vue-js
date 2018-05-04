@@ -13,7 +13,7 @@ In this mini project you can CRUD Operation, CRUD => Create,Read,Update and Dele
 #### Add some validation...........
 ![Validation](screenshots/2.PNG)
 
-##### Here you can update any record.
+#### Here you can update any record.
 ![Update](screenshots/4.PNG)
 
 #### Here you can see one record.
