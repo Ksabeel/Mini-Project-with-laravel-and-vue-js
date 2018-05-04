@@ -1,8 +1,8 @@
-###Mini Phonebook with Laravel & Vue js.
+### Mini Project with Laravel & Vue js.
 
-In this mini project you can read the record and create record and update the record and delete the record and you can live search the record by name.
+In this mini project you can CRUD Operation, CRUD => Create,Read,Update and Delete.
 
-#####I hope you like it..
+##### I hope you like it..
 
 1. Clone this repository (or download and extract the .zip)
 
@@ -20,3 +20,20 @@ In this mini project you can read the record and create record and update the re
 8. Run `php artisan db:seed` to seed your database.
 
 Congratulations! You can now run this mini project.
+
+It's home page, here you can also search record by name and also add pagination.
+![Home Page](screenshots/Capture.PNG)
+
+Here you can add new record.
+![New Record](screenshots/1.PNG)
+
+Add some validation.
+![Validation](screenshots/2.PNG)
+
+Here you can update any record.
+![Update](screenshots/4.PNG)
+
+Here you can see one record.
+![Single](screenshots/3.PNG)
+
+Sorry for my bad english..:(
