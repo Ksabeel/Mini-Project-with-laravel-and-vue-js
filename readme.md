@@ -27,7 +27,7 @@ It's home page, here you can also search record by name and also add pagination.
 Here you can add new record.
 ![New Record](screenshots/1.PNG)
 
-Add some validation.
+Add some validation...........
 ![Validation](screenshots/2.PNG)
 
 Here you can update any record.
