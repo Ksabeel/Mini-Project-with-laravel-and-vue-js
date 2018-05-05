@@ -1,6 +1,6 @@
 ### Mini Project with Laravel & Vue js.
 
-In this mini project you can CRUD Operation, CRUD => Create,Read,Update and Delete.
+In this mini project you can perform CRUD Operation, CRUD => Create,Read,Update and Delete.
 
 ##### I hope you like it..
 
