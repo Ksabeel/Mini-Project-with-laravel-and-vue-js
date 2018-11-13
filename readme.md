@@ -7,19 +7,6 @@ In this mini project you can perform CRUD Operation, CRUD => Create,Read,Update 
 #### It's home page, here you can also search record by name and also add pagination.
 ![Home Page](screenshots/Capture.PNG)
 
-#### Here you can add new record.
-![New Record](screenshots/1.PNG)
-
-#### Add some validation...
-![Validation](screenshots/2.PNG)
-
-#### Here you can update any record.
-![Update](screenshots/4.PNG)
-
-#### Here you can see one record.
-![Single](screenshots/3.PNG)
-
-
 ##### 1. Clone this repository (or download and extract the .zip)
 
 ##### 2. Run `composer install` from inside the project directory to download PHP dependencies.
@@ -36,5 +23,3 @@ In this mini project you can perform CRUD Operation, CRUD => Create,Read,Update 
 ##### 8. Run `php artisan db:seed` to seed your database.
 
 ##### Congratulations! You can now run this mini project.
-
-### Sorry for my bad english..:(
