@@ -15,5 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('records', 'PhonebookController');
-Route::get('records/search/{term?}', 'PhonebookController@index');
+Route::get('phonebooks/search/{term?}', 'PhonebooksController@index');
+Route::resource('phonebooks', 'PhonebooksController');

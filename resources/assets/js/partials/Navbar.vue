@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-laravel">
+    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
       <a class="navbar-brand" href="/">Laravel & Vue JS</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,15 +7,17 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <router-link to="/" class="nav-link">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/about" class="nav-link">About</router-link>
-          </li>
-          <li class="nav-item">
-              <router-link to="/contact" class="nav-link">Contact</router-link>
-          </li>
+          <router-link to="/" tag="li" active-class="active" exact>
+            <a class="nav-link">Home</a>
+          </router-link>
+
+          <router-link to="/about" tag="li" active-class="active">
+            <a class="nav-link">About</a>
+          </router-link>
+
+          <router-link to="/contact" tag="li" active-class="active">
+            <a class="nav-link">Contact</a>
+          </router-link>
         </ul>
       </div>
     </nav>
@@ -23,5 +25,5 @@
 
 <script>
     export default {
-    }
+    };
 </script>

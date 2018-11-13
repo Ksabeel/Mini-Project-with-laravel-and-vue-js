@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Phonebook;
+use Illuminate\Http\Request;
 
-class PhonebookController extends Controller
+class PhonebooksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,9 @@ class PhonebookController extends Controller
     {
         if ($term != null) {
             $phonebook = Phonebook::where('name', 'like', '%'.$term.'%')->get();
-            return request()->json(200, $phonebook);
+            return response()->json($phonebook, 200);
         }
+
         return $this->_allRecord();
     }
 
@@ -45,23 +46,22 @@ class PhonebookController extends Controller
             'phone' => 'required|min:7'
         ]);
 
-        $phonebook = new Phonebook;
-        $phonebook->name = $request->name;
-        $phonebook->email = $request->email;
-        $phonebook->phone = $request->phone;
+        Phonebook::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone
+        ]);
 
-        if ($phonebook->save()) {
-            return $this->_allRecord();
-        }
+        return $this->_allRecord();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Phonebook  $phonebook
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Phonebook $phonebook)
     {
         //
     }
@@ -69,45 +69,45 @@ class PhonebookController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Phonebook  $phonebook
      * @return \Illuminate\Http\Response
      */
-    public function edit(Phonebook $record)
+    public function edit(Phonebook $phonebook)
     {
-        return request()->json(200, $record);
+        return response()->json($phonebook, 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Phonebook  $phonebook
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Phonebook $record)
+    public function update(Request $request, Phonebook $phonebook)
     {
         $request->validate([
             'name' => 'required|min:6',
             'phone' => 'required|min:7'
         ]);
 
-        $record->name = $request->name;
-        $record->phone = $request->phone;
+        $phonebook->update([
+            'name' => $request->name,
+            'phone' => $request->phone
+        ]);
 
-        if ($record->save()) {
-            return $this->_allRecord();
-        }
+        return $this->_allRecord();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Phonebook  $phonebook
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Phonebook $record)
+    public function destroy(Phonebook $phonebook)
     {
-        if ($record->delete()) {
+        if ($phonebook->delete()) {
             return $this->_allRecord();
         } else {
             return response()->json(425, ['delete' => 'Error deleting record']);
@@ -116,7 +116,7 @@ class PhonebookController extends Controller
 
     private function _allRecord()
     {
-        $phonebook = Phonebook::orderBy('created_at', 'desc')->paginate(5);
-        return request()->json(200, $phonebook);
+        $phonebook = Phonebook::latest()->paginate(5);
+        return response()->json($phonebook, 200);
     }
 }

@@ -7,6 +7,7 @@
 
                     <div class="card-body">
                         <input type="text" class="form-control mb-3" placeholder="Search By Name" v-model="search" @keyup="searchRecord">
+
                         <table class="table">
                             <thead>
                                 <tr class="text-center">
@@ -19,16 +20,16 @@
                             </thead>
                             <tbody>
                                 <tr v-for="record in records.data" class="text-center">
-                                    <th>{{ record.id }}</th>
-                                    <td>{{ record.name }}</td>
-                                    <td>{{ record.email }}</td>
-                                    <td>{{ record.phone }}</td>
+                                    <th v-text="record.id"></th>
+                                    <td v-text="record.name"></td>
+                                    <td v-text="record.email"></td>
+                                    <td v-text="record.phone"></td>
                                     <td>
-                                        <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#viewRecord" @click="getRecord(record.id)"><i class="fa fa-eye"></i></button>
+                                        <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#viewRecord" @click="get(record.id)"><i class="fa fa-eye"></i></button>
 
-                                        <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editRecord" @click="getRecord(record.id)"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editRecord" @click="get(record.id)"><i class="fa fa-edit"></i></button>
 
-                                        <button class="btn btn-outline-danger btn-sm" @click="deleteRecord(record.id)"><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-outline-danger btn-sm" @click="remove(record.id)"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -40,72 +41,80 @@
                 </div>
             </div>
         </div>
-    <div id="modal">
-        <add-record @recordAdded="refreshRecord"></add-record>
-        <edit-record :editRec="editRec" @recordUpdated="refreshRecord"></edit-record>
-        <view-record :viewRec="editRec"></view-record>
-    </div>
+
+        <div id="modal">
+            <create @recordAdded="refreshRecord"></create>
+            <edit :editRec="editRec" @recordUpdated="refreshRecord"></edit>
+            <show :viewRec="editRec"></show>
+        </div>
+    
     </div>
 </template>
 
 <script>
-Vue.component('pagination', require('laravel-vue-pagination'));
-Vue.component('add-record', require('./Add.vue'));
-Vue.component('edit-record', require('./Edit.vue'));
-Vue.component('view-record', require('./View.vue'));
+    import Pagination from 'laravel-vue-pagination'
+    import Create from './Create'
+    import Edit from './Edit'
+    import Show from './Show'
+
     export default {
         data() {
             return {
                 records: {},
-                editRec: {},
+                editRec: [],
                 errors: [],
                 search: ''
             }
         },
+
+        components: {
+            Pagination, Create, Edit, Show
+        },
+
         methods: {
-            // Our method to GET results from a Laravel endpoint
             getResults(page) {
                 if (typeof page === 'undefined') {
                     page = 1;
                 }
 
-                // Using vue-resource as an example
-                axios.get('/records?page=' + page)
+                axios.get(`/phonebooks?page=${page}`)
                     .then(response => this.records = response.data)
                     .catch(error => console.log(error))
             },
+
             refreshRecord(record) {
-                this.records = record.data
+                this.records = record.data;
             },
-            getRecord(id) {
-                axios.get('/records/'+id+'/edit')
-                .then((response) => this.editRec = response.data)
-                .catch((error) => this.errors = error.response.data.errors)
+
+            get(id) {
+                axios.get(`/phonebooks/${id}/edit`)
+                    .then(response => this.editRec = response.data)
+                    .catch(error => this.errors = error.response.data.errors)
             },
-            deleteRecord(id) {
+
+            remove(id) {
                 if (confirm("Are you sure, you want to delete this record.?")) {
-                    axios.post('/records/'+id, {
-                        id: id,
-                        '_method': 'DELETE'
-                    })
-                    .then((response) => this.refreshRecord(response))
-                    .catch((error) =>  console.log(error))
+                    axios.delete(`/phonebooks/${id}`, { id })
+                        .then(response => this.refreshRecord(response))
+                        .catch(error =>  console.log(error))
                 } 
-            }, 
+            },
+
             searchRecord() {
                 if (this.search.length >= 3) {
-                    axios.get('/records/search/'+this.search)
-                    .then(response => this.records = response)
-                    .catch(error => console.log(error))
+                    axios.get(`/phonebooks/search/${this.search}`)
+                        .then(response => this.records = response)
+                        .catch(error => console.log(error))
                 } else {
                     this.getResults();
                 }
             }
         },
+
         created() {
-            axios.get('/records')
-            .then((response) => this.records = response.data)
-            .catch((error) => console.log(error))
+            axios.get('/phonebooks')
+                .then(response => this.records = response.data)
+                .catch(error => console.log(error))
         }
-    }
+    };
 </script>

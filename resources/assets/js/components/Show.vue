@@ -20,10 +20,10 @@
 					</thead>
 					<tbody>
 						<tr class="text-center">
-							<th>{{ viewRec.id }}</th>
-							<td>{{ viewRec.name }}</td>
-							<td>{{ viewRec.email }}</td>
-							<td>{{ viewRec.phone }}</td>
+							<th v-text="viewRec.id"></th>
+							<td v-text="viewRec.name"></td>
+							<td v-text="viewRec.email"></td>
+							<td v-text="viewRec.phone"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -38,5 +38,5 @@
 <script>
 	export default {
 		props: ['viewRec']
-	}
+	};
 </script>

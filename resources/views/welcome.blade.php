@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="app">
-          <app-navbar></app-navbar>
+          <navbar></navbar>
 
           <router-view></router-view>
         </div>
