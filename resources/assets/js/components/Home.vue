@@ -93,11 +93,29 @@
             },
 
             remove(id) {
-                if (confirm("Are you sure, you want to delete this record.?")) {
-                    axios.delete(`/phonebooks/${id}`, { id })
-                        .then(response => this.refreshRecord(response))
-                        .catch(error =>  console.log(error))
-                } 
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                })
+                .then((result) => {
+                    if (result.value) {
+                        axios.delete(`/phonebooks/${id}`, { id })
+                            .then(response => {
+                                this.refreshRecord(response);
+
+                                swal(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                            })
+                    }
+                })
             },
 
             searchRecord() {

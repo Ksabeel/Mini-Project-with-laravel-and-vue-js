@@ -1,97 +1,103 @@
 <template>
-<div class="modal fade" id="addRecord" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Add Record</h5>
-				<button type="button" class="close" @click="clearModal" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<p class="alert alert-success" v-if="success.length > 0" v-text="success"></p>
+	
+	<modal-layouts name="addRecord" id="addRecord" @keydown.esc="clearModal" @click.left="clearModal">
+		
+		<template slot="heading">Add Record</template>
 
-				<div class="form-group">
-					<label for="name">Name</label>
+		<template slot="main">
 
-					<input type="text" 
-						   name="name" 
-						   id="name" 
-						   class="form-control" 
-						   v-model="record.name"
-						   @keydown="delete errors.name">
+			<div class="form-group">
+				<label for="name">Name</label>
 
-					<span v-if="errors.name" class="text-danger">
-						<small v-text="errors.name[0]"></small>
-					</span>
-				</div>
+				<input type="text" 
+					   name="name" 
+					   id="name" 
+					   class="form-control" 
+					   v-model="record.name"
+					   @keydown="delete errors.name">
 
-				<div class="form-group">
-					<label for="email">E-Mail</label>
-
-					<input type="email" 
-						   name="email" 
-						   id="email" 
-						   class="form-control" 
-						   v-model="record.email" 
-						   @keydown="delete errors.email">
-
-					<span v-if="errors.email" class="text-danger">
-						<small v-text="errors.email[0]"></small>
-					</span>
-				</div>
-
-				<div class="form-group">
-					<label for="phone">Phone</label>
-
-					<input type="text" 
-						   name="phone" 
-						   id="phone" 
-						   class="form-control" 
-						   v-model="record.phone"
-						   @keydown="delete errors.phone">
-
-					<span v-if="errors.phone" class="text-danger">
-						<small v-text="errors.phone[0]"></small>
-					</span>
-				</div>
+				<span v-if="errors.name" class="text-danger">
+					<small v-text="errors.name[0]"></small>
+				</span>
 			</div>
 
-			<div class="modal-footer">
-				<button type="button" 
-						class="btn btn-outline-secondary" 
-						@click="clearModal" 
-						data-dismiss="modal">Close</button>
+			<div class="form-group">
+				<label for="email">E-Mail</label>
 
-				<button type="submit" class="btn btn-outline-primary" @click="saveRecord">Save</button>
+				<input type="email" 
+					   name="email" 
+					   id="email" 
+					   class="form-control" 
+					   v-model="record.email" 
+					   @keydown="delete errors.email">
+
+				<span v-if="errors.email" class="text-danger">
+					<small v-text="errors.email[0]"></small>
+				</span>
 			</div>
-		</div>
-	</div>
-</div>
+
+			<div class="form-group">
+				<label for="phone">Phone</label>
+
+				<input type="text" 
+					   name="phone" 
+					   id="phone" 
+					   class="form-control" 
+					   v-model="record.phone"
+					   @keydown="delete errors.phone">
+
+				<span v-if="errors.phone" class="text-danger">
+					<small v-text="errors.phone[0]"></small>
+				</span>
+			</div>
+		</template>
+
+		<template slot="footer">
+			<button type="button" 
+					class="btn btn-outline-secondary" 
+					@click="clearModal" 
+					data-dismiss="modal">Close</button>
+
+			<button type="submit" class="btn btn-outline-primary" @click="saveRecord">Save</button>
+		</template>
+
+	</modal-layouts>
+
 </template>
+
 <script>
+	import ModalLayouts from '../partials/ModalLayouts'
+
 	export default {
 		data() {
 			return {
 				record: {},
 				errors: [],
-				success: ''
 			}
 		},
+
+		components: { ModalLayouts },
+
 		methods: {
 			saveRecord() {
 				axios.post('/phonebooks', this.record)
 					.then(data => {
 						this.$emit('recordAdded', data);
-						this.success = 'Record Added Successfully';
-						this.record = {}
+
+						toast({
+						  type: 'success',
+						  title: 'Record has been added successfully!'
+						})
+
+						this.record = {};
+						$('#addRecord').modal('hide');
 					})
 					.catch(error => this.errors = error.response.data.errors)
 			},
 
 			clearModal() {
-				this.success = '';
 				this.errors = [];
+				this.record = {};
 			}
 		}
 	};
