@@ -13,13 +13,6 @@ In this mini project you can perform CRUD Operation, CRUD => Create,Read,Update 
 
 ##### 3. Run `npm install` or `yarn` to download JS dependencies.
 
-##### 4. Run `cp .env.example .env` to create your projects' `.env` file.
-
-##### 5. Run `php artisan key:generate` to create a new encryption key.
-
-##### 6. Open the project and edit the `.env` file to add database settings to your project. Take note of the database name, password, and username to make sure they match your system's settings. Change any other environment settings you desire.
-
-##### 7. Back in the terminal, run `php artisan migrate` to migrate your database.
-##### 8. Run `php artisan db:seed` to seed your database.
+##### 4. Run `php artisan laravel-vue:install` and just give the answers.
 
 ##### Congratulations! You can now run this mini project.

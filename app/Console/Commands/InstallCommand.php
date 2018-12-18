@@ -46,7 +46,14 @@ class InstallCommand extends Command
             $this->migrateDatabaseWithFreshCredentails($credentials);
 
             $this->line('~ Database successfully migrated.');
+
+            if ($this->confirm('Do you want to seed your database?', false)) {
+                $this->call('db:seed');
+
+                $this->line('~ Seeding successfully');
+            }
         }
+
 
         $this->call('cache:clear');
 
